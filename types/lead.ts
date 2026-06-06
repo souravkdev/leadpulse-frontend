@@ -104,17 +104,17 @@ export const STAGE_ORDER: LeadStage[] = [
 ];
 
 export const STAGE_COLORS: Record<LeadStage, string> = {
-  new: "bg-slate-100 text-slate-700",
-  contacted: "bg-blue-100 text-blue-700",
-  qualified: "bg-purple-100 text-purple-700",
-  proposal: "bg-orange-100 text-orange-700",
-  negotiation: "bg-yellow-100 text-yellow-700",
-  won: "bg-green-100 text-green-700",
-  lost: "bg-red-100 text-red-700",
+  new: "bg-stage-new text-stage-new-foreground",
+  contacted: "bg-stage-contacted text-stage-contacted-foreground",
+  qualified: "bg-stage-qualified text-stage-qualified-foreground",
+  proposal: "bg-stage-proposal text-stage-proposal-foreground",
+  negotiation: "bg-stage-negotiation text-stage-negotiation-foreground",
+  won: "bg-stage-won text-stage-won-foreground",
+  lost: "bg-stage-lost text-stage-lost-foreground",
 };
 
 export const PRIORITY_COLORS: Record<LeadPriority, string> = {
-  low: "bg-gray-100 text-gray-600",
-  medium: "bg-amber-100 text-amber-700",
-  high: "bg-red-100 text-red-600",
+  low: "bg-priority-low text-priority-low-foreground",
+  medium: "bg-priority-medium text-priority-medium-foreground",
+  high: "bg-priority-high text-priority-high-foreground",
 };

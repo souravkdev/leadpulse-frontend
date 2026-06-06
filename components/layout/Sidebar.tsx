@@ -29,7 +29,6 @@ const NAV_ITEMS = [
 
 const ADMIN_NAV_ITEMS = [
   { href: "/users", label: "Users", icon: Users },
-  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 export function Sidebar() {
@@ -48,7 +47,7 @@ export function Sidebar() {
     <aside className="flex flex-col w-64 shrink-0 border-r bg-card h-full">
       {/* Logo */}
       <div className="flex items-center gap-2 px-5 h-14 border-b">
-        <Zap className="h-5 w-5 text-orange-500" />
+        <Zap className="h-5 w-5 text-primary" />
         <span className="font-bold text-lg tracking-tight">LeadPulse</span>
       </div>
 
@@ -94,6 +93,21 @@ export function Sidebar() {
           </>
         )}
       </nav>
+
+      <div className="border-t p-3">
+        <Link
+          href="/settings"
+          className={cn(
+            "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+            pathname === "/settings"
+              ? "bg-accent text-accent-foreground"
+              : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+          )}
+        >
+          <Settings className="h-4 w-4 shrink-0" />
+          Settings
+        </Link>
+      </div>
 
       {/* User footer */}
       <div className="border-t p-3">

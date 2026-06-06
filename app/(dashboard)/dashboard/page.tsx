@@ -136,28 +136,28 @@ export default function DashboardPage() {
               value={stats?.total_leads ?? 0}
               subtitle="All time"
               icon={Users}
-              color="bg-blue-50 text-blue-600"
+              color="bg-primary/10 text-primary"
             />
             <KPICard
               title="Active Pipeline"
               value={stats?.active_leads ?? 0}
               subtitle="In progress"
               icon={Target}
-              color="bg-purple-50 text-purple-600"
+              color="bg-primary/10 text-primary"
             />
             <KPICard
               title="Deals Won"
               value={stats?.won_leads ?? 0}
               subtitle={`Win rate: ${stats?.win_rate_percent ?? 0}%`}
               icon={Award}
-              color="bg-green-50 text-green-600"
+              color="bg-primary/10 text-primary"
             />
             <KPICard
               title="Pipeline Value"
               value={formatCurrency(stats?.pipeline_value ?? 0)}
               subtitle={`Won: ${formatCurrency(stats?.won_value ?? 0)}`}
               icon={DollarSign}
-              color="bg-orange-50 text-orange-600"
+              color="bg-primary/10 text-primary"
             />
           </>
         )}

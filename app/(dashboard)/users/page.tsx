@@ -110,11 +110,11 @@ export default function UsersPage() {
                   </TableCell>
                   <TableCell>
                     {user.is_active ? (
-                      <Badge variant="outline" className="text-xs bg-green-50 text-green-700">
+                      <Badge variant="outline" className="text-xs bg-status-active text-status-active-foreground">
                         Active
                       </Badge>
                     ) : (
-                      <Badge variant="outline" className="text-xs bg-red-50 text-red-700">
+                      <Badge variant="outline" className="text-xs bg-status-inactive text-status-inactive-foreground">
                         Inactive
                       </Badge>
                     )}

@@ -25,11 +25,11 @@ const TYPE_ICONS: Record<string, React.ElementType> = {
 };
 
 const TYPE_COLORS: Record<string, string> = {
-  call: "bg-green-50 text-green-700",
-  email: "bg-blue-50 text-blue-700",
-  meeting: "bg-purple-50 text-purple-700",
-  note: "bg-yellow-50 text-yellow-700",
-  task: "bg-orange-50 text-orange-700",
+  call: "bg-activity-call text-activity-call-foreground",
+  email: "bg-activity-email text-activity-email-foreground",
+  meeting: "bg-activity-meeting text-activity-meeting-foreground",
+  note: "bg-activity-note text-activity-note-foreground",
+  task: "bg-activity-task text-activity-task-foreground",
 };
 
 export default function ActivitiesPage() {
@@ -115,11 +115,11 @@ export default function ActivitiesPage() {
                     </TableCell>
                     <TableCell>
                       {act.completed_at ? (
-                        <Badge variant="outline" className="text-xs bg-green-50 text-green-700">
+                        <Badge variant="outline" className="text-xs bg-status-active text-status-active-foreground">
                           Done
                         </Badge>
                       ) : act.due_date ? (
-                        <Badge variant="outline" className="text-xs bg-orange-50 text-orange-700">
+                        <Badge variant="outline" className="text-xs bg-status-inactive text-status-inactive-foreground">
                           Pending
                         </Badge>
                       ) : (

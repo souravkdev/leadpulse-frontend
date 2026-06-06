@@ -24,39 +24,39 @@ import { DollarSign } from "lucide-react";
 
 const STAGE_COLUMN_STYLES: Record<LeadStage, { column: string; dropZone: string; cardAccent: string }> = {
   new: {
-    column: "border-slate-200 bg-slate-50/50",
-    dropZone: "border-slate-200 bg-slate-100/60",
-    cardAccent: "border-l-slate-400",
+    column: "border-stage-new bg-stage-new/30",
+    dropZone: "border-stage-new bg-stage-new/20 border-dashed",
+    cardAccent: "border-l-stage-new-foreground",
   },
   contacted: {
-    column: "border-blue-200 bg-blue-50/50",
-    dropZone: "border-blue-200 bg-blue-100/55",
-    cardAccent: "border-l-blue-400",
+    column: "border-stage-contacted bg-stage-contacted/30",
+    dropZone: "border-stage-contacted bg-stage-contacted/20 border-dashed",
+    cardAccent: "border-l-stage-contacted-foreground",
   },
   qualified: {
-    column: "border-purple-200 bg-purple-50/50",
-    dropZone: "border-purple-200 bg-purple-100/55",
-    cardAccent: "border-l-purple-400",
+    column: "border-stage-qualified bg-stage-qualified/30",
+    dropZone: "border-stage-qualified bg-stage-qualified/20 border-dashed",
+    cardAccent: "border-l-stage-qualified-foreground",
   },
   proposal: {
-    column: "border-orange-200 bg-orange-50/55",
-    dropZone: "border-orange-200 bg-orange-100/55",
-    cardAccent: "border-l-orange-400",
+    column: "border-stage-proposal bg-stage-proposal/30",
+    dropZone: "border-stage-proposal bg-stage-proposal/20 border-dashed",
+    cardAccent: "border-l-stage-proposal-foreground",
   },
   negotiation: {
-    column: "border-amber-200 bg-amber-50/55",
-    dropZone: "border-amber-200 bg-amber-100/55",
-    cardAccent: "border-l-amber-400",
+    column: "border-stage-negotiation bg-stage-negotiation/30",
+    dropZone: "border-stage-negotiation bg-stage-negotiation/20 border-dashed",
+    cardAccent: "border-l-stage-negotiation-foreground",
   },
   won: {
-    column: "border-emerald-200 bg-emerald-50/55",
-    dropZone: "border-emerald-200 bg-emerald-100/55",
-    cardAccent: "border-l-emerald-500",
+    column: "border-stage-won bg-stage-won/30",
+    dropZone: "border-stage-won bg-stage-won/20 border-dashed",
+    cardAccent: "border-l-stage-won-foreground",
   },
   lost: {
-    column: "border-rose-200 bg-rose-50/55",
-    dropZone: "border-rose-200 bg-rose-100/55",
-    cardAccent: "border-l-rose-500",
+    column: "border-stage-lost bg-stage-lost/30",
+    dropZone: "border-stage-lost bg-stage-lost/20 border-dashed",
+    cardAccent: "border-l-stage-lost-foreground",
   },
 };
 

@@ -51,7 +51,7 @@ export function LoginForm() {
     <Card className="w-full max-w-md shadow-lg">
       <CardHeader className="space-y-2 pb-4">
         <div className="flex items-center gap-2">
-          <Zap className="h-6 w-6 text-orange-500" />
+          <Zap className="h-6 w-6 text-primary" />
           <span className="text-xl font-bold tracking-tight">LeadPulse</span>
         </div>
         <CardTitle className="text-2xl">Sign in</CardTitle>
