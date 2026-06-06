@@ -11,7 +11,7 @@ function getBreadcrumb(pathname: string): string {
     "/leads": "Leads",
     "/pipeline": "Pipeline",
     "/activities": "Activities",
-    // "/analytics": "  Analytics", --- IGNORE ---
+    "/analytics": "Analytics",
     "/users": "Users",
     "/settings": "Settings",
   };

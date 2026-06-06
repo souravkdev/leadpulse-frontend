@@ -24,7 +24,7 @@ const NAV_ITEMS = [
   { href: "/leads", label: "Leads", icon: Zap },
   { href: "/pipeline", label: "Pipeline", icon: KanbanSquare },
   { href: "/activities", label: "Activities", icon: Activity },
-//   { href: "/analytics", label: "Analytics", icon: BarChart3 }, 
+  { href: "/analytics", label: "Analytics", icon: BarChart3 },
 ];
 
 const ADMIN_NAV_ITEMS = [
