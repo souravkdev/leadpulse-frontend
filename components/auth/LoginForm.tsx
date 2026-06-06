@@ -95,9 +95,9 @@ export function LoginForm() {
             Sign in
           </Button>
 
-          <p className="text-xs text-center text-muted-foreground">
+          {/* <p className="text-xs text-center text-muted-foreground">
             Default: admin@leadpulse.com / Admin@123
-          </p>
+          </p> */}
         </form>
       </CardContent>
     </Card>
