@@ -48,11 +48,12 @@ import { toast } from "sonner";
 
 interface LeadsDataTableProps {
   onCreateNew?: () => void;
+  onView?: (lead: Lead) => void;
   onEdit?: (lead: Lead) => void;
   onLogActivity?: (lead: Lead) => void;
 }
 
-export function LeadsDataTable({ onCreateNew, onEdit, onLogActivity }: LeadsDataTableProps) {
+export function LeadsDataTable({ onCreateNew, onView, onEdit, onLogActivity }: LeadsDataTableProps) {
   const [page, setPage] = useState(1);
   const [stageFilter, setStageFilter] = useState<LeadStage | "">("");
   const [search, setSearch] = useState("");
@@ -93,6 +94,7 @@ export function LeadsDataTable({ onCreateNew, onEdit, onLogActivity }: LeadsData
   }
 
   const columns = buildColumns({
+    onView,
     onEdit,
     onDelete: handleDelete,
     onLogActivity,

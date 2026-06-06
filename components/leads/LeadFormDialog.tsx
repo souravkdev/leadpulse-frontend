@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { useQuery } from "@tanstack/react-query";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,9 +25,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { api } from "@/lib/api";
 import { useCreateLead, useUpdateLead } from "@/hooks/useLeads";
 import type { Lead } from "@/types/lead";
 import { STAGE_LABELS, STAGE_ORDER } from "@/types/lead";
+import type { User } from "@/types/user";
+import { useAuthStore } from "@/stores/authStore";
 
 const schema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -37,6 +41,7 @@ const schema = z.object({
   stage: z.string().optional(),
   priority: z.enum(["low", "medium", "high"]).optional(),
   source: z.string().optional(),
+  assigned_to_id: z.string().optional(),
   value: z.string().optional(),
   notes: z.string().optional(),
   expected_close_date: z.string().optional(),
@@ -52,8 +57,17 @@ interface Props {
 
 export function LeadFormDialog({ open, onClose, lead }: Props) {
   const isEdit = !!lead;
+  const currentUser = useAuthStore((s) => s.user);
+  const canAssignLeads = currentUser?.role === "admin";
   const createLead = useCreateLead();
   const updateLead = useUpdateLead(lead?.id ?? "");
+
+  const { data: assignees = [] } = useQuery<User[]>({
+    queryKey: ["lead-assignees"],
+    queryFn: () => api.get("/users").then((r) => r.data),
+    enabled: open && canAssignLeads,
+    staleTime: 60_000,
+  });
 
   const {
     register,
@@ -77,6 +91,7 @@ export function LeadFormDialog({ open, onClose, lead }: Props) {
           stage: lead.stage,
           priority: lead.priority,
           source: lead.source,
+          assigned_to_id: lead.assigned_to_id ?? "",
           value: lead.value != null ? String(lead.value) : "",
           notes: lead.notes ?? "",
           expected_close_date: lead.expected_close_date ?? "",
@@ -91,6 +106,7 @@ export function LeadFormDialog({ open, onClose, lead }: Props) {
           stage: "new",
           priority: "medium",
           source: "other",
+          assigned_to_id: "",
           value: "",
           notes: "",
           expected_close_date: "",
@@ -107,6 +123,7 @@ export function LeadFormDialog({ open, onClose, lead }: Props) {
       phone: data.phone || undefined,
       notes: data.notes || undefined,
       expected_close_date: data.expected_close_date || undefined,
+      assigned_to_id: data.assigned_to_id || undefined,
       value: data.value ? parseFloat(data.value) : undefined,
     };
 
@@ -207,6 +224,32 @@ export function LeadFormDialog({ open, onClose, lead }: Props) {
               </Select>
             </div>
           </div>
+
+          {canAssignLeads && (
+            <div className="space-y-1">
+              <Label>Assign To</Label>
+              <Select
+                value={watch("assigned_to_id") || "__unassigned__"}
+                onValueChange={(v) =>
+                  setValue("assigned_to_id", v && v !== "__unassigned__" ? v : undefined)
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select assignee" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="__unassigned__">Unassigned</SelectItem>
+                  {assignees
+                    .filter((u) => u.is_active)
+                    .map((u) => (
+                      <SelectItem key={u.id} value={u.id}>
+                        {u.full_name} ({u.email})
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
 
           {/* Value + Close Date row */}
           <div className="grid grid-cols-2 gap-3">

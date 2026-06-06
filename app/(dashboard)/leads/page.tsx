@@ -4,12 +4,15 @@ import { useState } from "react";
 import { LeadsDataTable } from "@/components/leads/LeadsDataTable";
 import { LeadFormDialog } from "@/components/leads/LeadFormDialog";
 import { AddActivityDialog } from "@/components/leads/AddActivityDialog";
+import { ViewLeadDialog } from "@/components/leads/ViewLeadDialog";
 import type { Lead } from "@/types/lead";
 
 export default function LeadsPage() {
   const [formOpen, setFormOpen] = useState(false);
+  const [viewOpen, setViewOpen] = useState(false);
   const [activityOpen, setActivityOpen] = useState(false);
   const [editingLead, setEditingLead] = useState<Lead | null>(null);
+  const [viewingLead, setViewingLead] = useState<Lead | null>(null);
   const [activityLead, setActivityLead] = useState<Lead | null>(null);
 
   function openCreate() {
@@ -20,6 +23,11 @@ export default function LeadsPage() {
   function openEdit(lead: Lead) {
     setEditingLead(lead);
     setFormOpen(true);
+  }
+
+  function openView(lead: Lead) {
+    setViewingLead(lead);
+    setViewOpen(true);
   }
 
   function openLogActivity(lead: Lead) {
@@ -36,8 +44,15 @@ export default function LeadsPage() {
 
       <LeadsDataTable
         onCreateNew={openCreate}
+        onView={openView}
         onEdit={openEdit}
         onLogActivity={openLogActivity}
+      />
+
+      <ViewLeadDialog
+        open={viewOpen}
+        onClose={() => setViewOpen(false)}
+        lead={viewingLead}
       />
 
       <LeadFormDialog

@@ -1,5 +1,5 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, Eye, MoreHorizontal, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
@@ -7,7 +7,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -20,6 +19,7 @@ import {
 import { format } from "date-fns";
 
 interface ColumnActions {
+  onView?: (lead: Lead) => void;
   onEdit?: (lead: Lead) => void;
   onDelete?: (lead: Lead) => void;
   onLogActivity?: (lead: Lead) => void;
@@ -167,42 +167,60 @@ export function buildColumns(actions: ColumnActions): ColumnDef<Lead>[] {
     {
       id: "actions",
       enableHiding: false,
+      header: "Actions",
       cell: ({ row }) => {
         const lead = row.original;
         const canEdit = actions.canEdit?.(lead.created_by_id) ?? true;
 
         return (
-          <DropdownMenu>
-            <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              {canEdit && (
-                <>
-                  <DropdownMenuItem onClick={() => actions.onEdit?.(lead)}>
-                    Edit lead
-                  </DropdownMenuItem>
-                </>
-              )}
-              <DropdownMenuItem onClick={() => actions.onLogActivity?.(lead)}>
-                Log activity
-              </DropdownMenuItem>
-              {actions.canDelete && (
-                <>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem
-                    className="text-destructive focus:text-destructive"
-                    onClick={() => actions.onDelete?.(lead)}
-                  >
-                    Delete lead
-                  </DropdownMenuItem>
-                </>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div className="flex items-center gap-1">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8"
+              onClick={() => actions.onView?.(lead)}
+              aria-label="View lead"
+              title="View lead"
+            >
+              <Eye className="h-4 w-4" />
+            </Button>
+            {canEdit && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8"
+                onClick={() => actions.onEdit?.(lead)}
+                aria-label="Edit lead"
+                title="Edit lead"
+              >
+                <Pencil className="h-4 w-4" />
+              </Button>
+            )}
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md hover:bg-accent">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className="h-4 w-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <div className="px-1.5 py-1 text-xs font-medium text-muted-foreground">More actions</div>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => actions.onLogActivity?.(lead)}>
+                  Log activity
+                </DropdownMenuItem>
+                {actions.canDelete && (
+                  <>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      className="text-destructive focus:text-destructive"
+                      onClick={() => actions.onDelete?.(lead)}
+                    >
+                      Delete lead
+                    </DropdownMenuItem>
+                  </>
+                )}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         );
       },
     },
