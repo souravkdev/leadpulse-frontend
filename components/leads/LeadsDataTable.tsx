@@ -158,10 +158,8 @@ export function LeadsDataTable({ onCreateNew, onEdit, onLogActivity }: LeadsData
         </Select>
 
         <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Button variant="outline" size="sm">
-              Columns
-            </Button>
+          <DropdownMenuTrigger className="inline-flex items-center gap-1.5 rounded-md border border-input bg-background px-3 py-1.5 text-sm font-medium shadow-xs hover:bg-accent hover:text-accent-foreground transition-colors">
+            Columns
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {table
