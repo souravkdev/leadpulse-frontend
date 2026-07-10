@@ -14,7 +14,12 @@ function getBreadcrumb(pathname: string): string {
     "/analytics": "Analytics",
     "/users": "Users",
     "/settings": "Settings",
+    "/attendance": "Attendance",
   };
+  if (pathname.startsWith("/attendance/calendar")) return "Attendance Calendar";
+  if (pathname.startsWith("/attendance/leave")) return "Leave";
+  if (pathname.startsWith("/attendance/corrections")) return "Corrections";
+  if (pathname.startsWith("/attendance/admin")) return "Attendance Admin";
   const base = "/" + pathname.split("/")[1];
   return map[base] ?? "LeadPulse CRM";
 }

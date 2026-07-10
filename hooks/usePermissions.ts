@@ -48,6 +48,18 @@ export function usePermissions() {
     return false;
   }
 
+  function canUseAttendance() {
+    return role !== "viewer";
+  }
+
+  function canManageAttendanceAdmin() {
+    return role === "admin";
+  }
+
+  function canApproveLeave() {
+    return role === "admin" || role === "sales_manager";
+  }
+
   return {
     role,
     hasRole,
@@ -57,5 +69,8 @@ export function usePermissions() {
     canExport,
     canCreateLead,
     canEditLead,
+    canUseAttendance,
+    canManageAttendanceAdmin,
+    canApproveLeave,
   };
 }

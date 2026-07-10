@@ -11,6 +11,10 @@ import {
   KanbanSquare,
   Settings,
   LogOut,
+  Clock,
+  CalendarDays,
+  Palmtree,
+  ShieldCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
@@ -31,10 +35,26 @@ const ADMIN_NAV_ITEMS = [
   { href: "/users", label: "Users", icon: Users },
 ];
 
+function isNavActive(pathname: string, href: string, exact = false) {
+  if (exact || href === "/attendance") return pathname === href;
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+const ATTENDANCE_NAV_ITEMS = [
+  { href: "/attendance", label: "Clock In/Out", icon: Clock },
+  { href: "/attendance/calendar", label: "Calendar", icon: CalendarDays },
+  { href: "/attendance/leave", label: "Leave", icon: Palmtree },
+];
+
+const ATTENDANCE_ADMIN_NAV = [
+  { href: "/attendance/admin", label: "Attendance Admin", icon: ShieldCheck },
+];
+
 export function Sidebar() {
   const pathname = usePathname();
   const { user, logout } = useAuth();
-  const { canManageUsers } = usePermissions();
+  const { canManageUsers, canUseAttendance, canManageAttendanceAdmin, canApproveLeave } =
+    usePermissions();
 
   const initials = user?.full_name
     ?.split(" ")
@@ -59,7 +79,7 @@ export function Sidebar() {
             href={item.href}
             className={cn(
               "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
-              pathname === item.href || pathname.startsWith(item.href + "/")
+              isNavActive(pathname, item.href)
                 ? "bg-accent text-accent-foreground"
                 : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
             )}
@@ -68,6 +88,46 @@ export function Sidebar() {
             {item.label}
           </Link>
         ))}
+
+        {canUseAttendance() && (
+          <>
+            <Separator className="my-2" />
+            <p className="px-3 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+              Attendance
+            </p>
+            {ATTENDANCE_NAV_ITEMS.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                  isNavActive(pathname, item.href)
+                    ? "bg-accent text-accent-foreground"
+                    : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                )}
+              >
+                <item.icon className="h-4 w-4 shrink-0" />
+                {item.label}
+              </Link>
+            ))}
+            {(canManageAttendanceAdmin() || canApproveLeave()) &&
+              ATTENDANCE_ADMIN_NAV.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                    pathname === item.href
+                      ? "bg-accent text-accent-foreground"
+                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                  )}
+                >
+                  <item.icon className="h-4 w-4 shrink-0" />
+                  {item.label}
+                </Link>
+              ))}
+          </>
+        )}
 
         {canManageUsers() && (
           <>
