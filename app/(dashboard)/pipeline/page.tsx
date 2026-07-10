@@ -172,7 +172,7 @@ export default function PipelinePage() {
     if (!leadId) return;
     const lead = data?.items.find((l) => l.id === leadId);
     if (!lead || lead.stage === newStage) return;
-    if (!canEditLead(lead.created_by_id)) {
+    if (!canEditLead(lead.created_by_id, lead.assigned_to_id)) {
       toast.error("You don't have permission to edit this lead");
       return;
     }

@@ -36,9 +36,15 @@ export function usePermissions() {
     return role !== "viewer";
   }
 
-  function canEditLead(ownerId: string) {
+  function canEditLead(createdById: string, assignedToId?: string | null) {
     if (role === "admin" || role === "sales_manager") return true;
-    if (role === "sales_agent" && user?.id === ownerId) return true;
+    if (
+      role === "sales_agent" &&
+      user?.id &&
+      (user.id === createdById || user.id === assignedToId)
+    ) {
+      return true;
+    }
     return false;
   }
 

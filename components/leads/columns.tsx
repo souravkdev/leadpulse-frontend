@@ -24,7 +24,7 @@ interface ColumnActions {
   onDelete?: (lead: Lead) => void;
   onLogActivity?: (lead: Lead) => void;
   canDelete?: boolean;
-  canEdit?: (ownerId: string) => boolean;
+  canEdit?: (createdById: string, assignedToId?: string | null) => boolean;
 }
 
 export function buildColumns(actions: ColumnActions): ColumnDef<Lead>[] {
@@ -170,7 +170,7 @@ export function buildColumns(actions: ColumnActions): ColumnDef<Lead>[] {
       header: "Actions",
       cell: ({ row }) => {
         const lead = row.original;
-        const canEdit = actions.canEdit?.(lead.created_by_id) ?? true;
+        const canEdit = actions.canEdit?.(lead.created_by_id, lead.assigned_to_id) ?? true;
 
         return (
           <div className="flex items-center gap-1">
