@@ -23,6 +23,8 @@ import {
   Cell,
 } from "recharts";
 import { STAGE_LABELS } from "@/types/lead";
+import { MyAttendanceWidget } from "@/components/attendance/MyAttendanceWidget";
+import { usePermissions } from "@/hooks/usePermissions";
 
 interface DashboardStats {
   total_leads: number;
@@ -84,6 +86,7 @@ function KPICard({
 }
 
 export default function DashboardPage() {
+  const { canUseAttendance } = usePermissions();
   const { data: stats, isLoading: statsLoading } = useQuery<DashboardStats>({
     queryKey: ["analytics", "dashboard"],
     queryFn: () => api.get("/analytics/dashboard").then((r) => r.data),
@@ -117,6 +120,8 @@ export default function DashboardPage() {
           Your lead pipeline at a glance
         </p>
       </div>
+
+      {canUseAttendance() && <MyAttendanceWidget />}
 
       {/* KPI Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
